@@ -1,0 +1,41 @@
+FROM nvcr.io/nvidia/pytorch:24.02-py3
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    apt-utils \
+    libgl1 \
+    bash \
+    build-essential \
+    cmake \
+    git \
+    ssh \
+    checkinstall  \
+    make \
+    protobuf-compiler \
+    wget \
+    tmux \
+    xclip \
+    htop \
+    vim  \
+    unzip \
+    curl \
+    zip \
+    iotop \
+    nvtop \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY ./requirements.txt /opt/requirements.txt
+RUN pip install --no-cache-dir -r /opt/requirements.txt
+
+ARG USER
+ARG USER_ID
+ARG GROUP_ID
+RUN groupadd -r ${USER} -g ${GROUP_ID}
+RUN useradd \
+    -l -u ${USER_ID} -r -g ${USER} \
+    -m -d /home/${USER} \
+    -s /bin/bash ${USER}
+
+RUN chown -R ${USER_ID}:${GROUP_ID} /var
+
+WORKDIR /home/${USER}/ODS_NLP_Project
+USER ${USER}
