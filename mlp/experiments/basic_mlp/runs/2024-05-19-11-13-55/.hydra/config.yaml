@@ -1,0 +1,111 @@
+exp_name: basic_mlp
+datadirs:
+  train: /data/guesslang_data/Dataset/Data/train
+  valid: /data/guesslang_data/Dataset/Data/valid
+  test: /data/guesslang_data/Dataset/Data/test
+datadir: /data/guesslang_data/Dataset/Data
+outputs_dir: ./experiments
+max_epochs: 200
+accelerator: gpu
+devices:
+- 1
+precision: 32
+accumulate_grad_batches: 1
+enable_checkpointing: true
+strategy: auto
+lr: 0.001
+max_workers: 16
+num_workers: 4
+batch_size: 2048
+metric_to_monitor: F1Score/val
+metric_mode: max
+vocab: data/vocab_1_2.json
+label_encoder: data/label_encoder.pkl
+max_tokens: 128
+padding_idx: 710
+vocab_size: 711
+model:
+  _target_: models.CodeCalssificationMLP
+  embedding_dim: 32
+  num_classes: 54
+  hidden_dims:
+  - 128
+  padding_idx: ${padding_idx}
+  vocab_size: ${vocab_size}
+tokenizer:
+  _target_: tokenizer.RegexTokenizer
+  vocab: ${vocab}
+  pattern: \b[a-zA-Z]+\b|[(){}<>,;.:=\[\]]
+  max_tokens: ${max_tokens}
+  padding_idx: ${padding_idx}
+paths:
+  root_dir: ./
+  data_dir: ${paths.root_dir}/data/
+  log_dir: ${paths.root_dir}/logs/
+  output_dir: ${hydra:runtime.output_dir}
+  work_dir: ${hydra:runtime.cwd}
+callbacks:
+  model_checkpoint:
+    _target_: lightning.pytorch.callbacks.ModelCheckpoint
+    dirpath: ${paths.output_dir}/checkpoints
+    filename: epoch-{epoch:03d}_{${metric_to_monitor}:03f}
+    monitor: ${metric_to_monitor}
+    verbose: false
+    every_n_epochs: 1
+    save_last: true
+    save_top_k: 1
+    mode: ${metric_mode}
+    auto_insert_metric_name: false
+    save_weights_only: true
+    every_n_train_steps: null
+    train_time_interval: null
+    save_on_train_epoch_end: null
+  rich_progress_bar:
+    _target_: lightning.pytorch.callbacks.RichProgressBar
+logger:
+- _target_: pytorch_lightning.loggers.tensorboard.TensorBoardLogger
+  save_dir: ${paths.output_dir}
+  name: tensorboard
+  log_graph: false
+  default_hp_metric: true
+  prefix: ''
+trainer:
+  _target_: lightning.Trainer
+  _partial_: true
+  num_sanity_val_steps: 10
+  sync_batchnorm: true
+  gradient_clip_val: 3.0
+  logger: ${logger}
+  max_epochs: ${max_epochs}
+  accelerator: ${accelerator}
+  devices: ${devices}
+  precision: ${precision}
+  accumulate_grad_batches: ${accumulate_grad_batches}
+  enable_checkpointing: true
+  deterministic: false
+  log_every_n_steps: 4
+  strategy: ${strategy}
+optim:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: ${lr}
+  weight_decay: 0.0
+datamodule:
+  _target_: datamodule.CodeClassificationDatamodule
+  datadir: ${datadir}
+  tokenizer: ${tokenizer}
+  label_encoder: ${label_encoder}
+  max_tokens: ${max_tokens}
+  random_crop: false
+  num_workers: ${num_workers}
+  batch_size: ${batch_size}
+criterion:
+  _target_: torch.nn.CrossEntropyLoss
+scheduler:
+  _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+  _partial_: true
+  mode: ${metric_mode}
+  factor: 0.5
+  patience: 20
+  verbose: true
+  min_lr: 1.0e-06

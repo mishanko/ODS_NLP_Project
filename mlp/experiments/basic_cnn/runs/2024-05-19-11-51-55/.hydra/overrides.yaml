@@ -1,0 +1,5 @@
+- exp_name=basic_cnn
+- model=cnn
+- model.hidden_dims=[256]
+- lr=0.01
+- num_workers=8

@@ -1,0 +1,9 @@
+_target_: datamodule.CodeClassificationDatamodule
+# _partial_: true
+datadir: ${datadir}
+tokenizer: ${tokenizer}
+label_encoder: ${label_encoder}
+max_tokens: ${max_tokens}
+random_crop: false
+num_workers: ${num_workers}
+batch_size: ${batch_size}

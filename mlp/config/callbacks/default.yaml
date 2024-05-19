@@ -1,0 +1,12 @@
+defaults:
+  - model_checkpoint.yaml
+  - rich_progress_bar.yaml
+  - _self_
+
+model_checkpoint:
+  dirpath: ${paths.output_dir}/checkpoints
+  monitor: ${metric_to_monitor}
+  mode: ${metric_mode}
+  save_last: True
+  auto_insert_metric_name: false
+  save_top_k: 1

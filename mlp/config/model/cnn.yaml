@@ -1,0 +1,7 @@
+_target_: models.CodeCalssificationCNN
+embedding_dim: 32
+num_classes: 54
+hidden_dims:
+  - 128
+padding_idx: ${padding_idx}
+vocab_size: ${vocab_size}

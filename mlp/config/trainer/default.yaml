@@ -1,0 +1,15 @@
+_target_: lightning.Trainer
+_partial_: True
+num_sanity_val_steps: 10
+sync_batchnorm: true
+gradient_clip_val: 3.0
+logger: ${logger}
+max_epochs: ${max_epochs}
+accelerator: ${accelerator}
+devices: ${devices}
+precision: ${precision}
+accumulate_grad_batches: ${accumulate_grad_batches}
+enable_checkpointing: true
+deterministic: false
+log_every_n_steps: 4
+strategy: ${strategy}
