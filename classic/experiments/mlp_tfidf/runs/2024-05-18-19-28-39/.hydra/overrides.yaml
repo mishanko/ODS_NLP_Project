@@ -1,0 +1,7 @@
+- exp_name=mlp_tfidf
+- min_df=0.05
+- ngram_range=3
+- model=mlp
+- vectorizer=tf_idf
+- max_features=2048
+- model.hidden_layer_sizes=[256,128]

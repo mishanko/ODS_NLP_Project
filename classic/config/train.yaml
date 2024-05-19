@@ -1,0 +1,30 @@
+exp_name: null
+datadirs: 
+  train: /data/guesslang_data/Dataset/Data/train
+  valid: /data/guesslang_data/Dataset/Data/valid
+  test: /data/guesslang_data/Dataset/Data/test
+datadir: /data/guesslang_data/Dataset/Data
+
+outputs_dir: ./experiments
+
+max_workers: 16
+verbose: 1
+max_features: 2048
+min_df: 0.1
+ngram_range: 1
+lr: 0.001
+
+vectorizer_path: null
+
+defaults:
+  - _self_
+  - model: multinomial_nb
+  - vectorizer: count
+  - paths: default
+
+hydra:
+  run:
+    dir: ${outputs_dir}/${exp_name}/runs/${now:%Y-%m-%d}-${now:%H-%M-%S}
+  sweep:
+    dir: ${outputs_dir}/${exp_name}/multiruns/
+    subdir: ${hydra.job.num}

@@ -1,0 +1,5 @@
+- exp_name=logreg_tfidf
+- min_df=0.05
+- ngram_range=1
+- model=logreg
+- vectorizer=tf_idf

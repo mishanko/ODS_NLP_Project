@@ -1,0 +1,3 @@
+- exp_name=naive_bayes
+- min_df=0.05
+- ngram_range=2

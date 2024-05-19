@@ -1,0 +1,12 @@
+_target_: sklearn.neural_network.MLPClassifier
+hidden_layer_sizes:
+  - 128
+solver: adam
+learning_rate_init: ${lr}
+max_iter: 500
+early_stopping: true
+validation_fraction: 0.1
+random_state: 42
+shuffle: true
+verbose: ${verbose}
+activation: relu

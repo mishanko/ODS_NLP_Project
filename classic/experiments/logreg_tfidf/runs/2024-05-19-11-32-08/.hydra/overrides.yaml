@@ -1,0 +1,6 @@
+- exp_name=logreg_tfidf
+- min_df=0.01
+- ngram_range=3
+- model=logreg
+- vectorizer=tf_idf
+- max_features=2048

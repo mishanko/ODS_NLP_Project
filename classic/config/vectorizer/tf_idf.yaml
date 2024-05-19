@@ -1,0 +1,7 @@
+_target_: sklearn.feature_extraction.text.TfidfVectorizer
+token_pattern: '\b[a-zA-Z]+\b|[(){}<>,;.:=\[\]]'
+max_features: ${max_features}
+analyzer: word
+min_df: ${min_df}
+max_df: 1.0
+ngram_range: ${as_tuple:1,${ngram_range}}

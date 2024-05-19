@@ -1,0 +1,40 @@
+exp_name: mlp_tfidf
+datadirs:
+  train: /data/guesslang_data/Dataset/Data/train
+  valid: /data/guesslang_data/Dataset/Data/valid
+  test: /data/guesslang_data/Dataset/Data/test
+datadir: /data/guesslang_data/Dataset/Data
+outputs_dir: ./experiments
+max_workers: 16
+verbose: 1
+max_features: 1024
+min_df: 0.05
+ngram_range: 2
+lr: 0.001
+vectorizer_path: null
+model:
+  _target_: sklearn.neural_network.MLPClassifier
+  hidden_layer_sizes: 256
+  solver: adam
+  learning_rate_init: ${lr}
+  max_iter: 500
+  early_stopping: true
+  validation_fraction: 0.1
+  random_state: 42
+  shuffle: true
+  verbose: ${verbose}
+  activation: relu
+vectorizer:
+  _target_: sklearn.feature_extraction.text.TfidfVectorizer
+  token_pattern: \b[a-zA-Z]+\b|[(){}<>,;.:=\[\]]
+  max_features: ${max_features}
+  analyzer: word
+  min_df: ${min_df}
+  max_df: 1.0
+  ngram_range: ${as_tuple:1,${ngram_range}}
+paths:
+  root_dir: ./
+  data_dir: ${paths.root_dir}/data/
+  log_dir: ${paths.root_dir}/logs/
+  output_dir: ${hydra:runtime.output_dir}
+  work_dir: ${hydra:runtime.cwd}

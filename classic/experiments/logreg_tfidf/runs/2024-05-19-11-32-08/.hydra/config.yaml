@@ -1,0 +1,34 @@
+exp_name: logreg_tfidf
+datadirs:
+  train: /data/guesslang_data/Dataset/Data/train
+  valid: /data/guesslang_data/Dataset/Data/valid
+  test: /data/guesslang_data/Dataset/Data/test
+datadir: /data/guesslang_data/Dataset/Data
+outputs_dir: ./experiments
+max_workers: 16
+verbose: 1
+max_features: 2048
+min_df: 0.01
+ngram_range: 3
+lr: 0.001
+vectorizer_path: null
+model:
+  _target_: sklearn.linear_model.LogisticRegression
+  random_state: 42
+  verbose: ${verbose}
+  n_jobs: ${max_workers}
+  max_iter: 10000
+vectorizer:
+  _target_: sklearn.feature_extraction.text.TfidfVectorizer
+  token_pattern: \b[a-zA-Z]+\b|[(){}<>,;.:=\[\]]
+  max_features: ${max_features}
+  analyzer: word
+  min_df: ${min_df}
+  max_df: 1.0
+  ngram_range: ${as_tuple:1,${ngram_range}}
+paths:
+  root_dir: ./
+  data_dir: ${paths.root_dir}/data/
+  log_dir: ${paths.root_dir}/logs/
+  output_dir: ${hydra:runtime.output_dir}
+  work_dir: ${hydra:runtime.cwd}
