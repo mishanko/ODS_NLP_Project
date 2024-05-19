@@ -2,3 +2,6 @@ transformers
 gensim
 nltk
 spacy
+sentencepiece
+hydra-core
+accelerate
