@@ -4,8 +4,8 @@ import torch
 from torch import Tensor
 from torch.utils.data import Dataset
 from sklearn.preprocessing import LabelEncoder
-from common import read_file
-from tokenizer import RegexTokenizer
+from .common import read_file
+from .tokenizer import RegexTokenizer
 import pickle
 
 

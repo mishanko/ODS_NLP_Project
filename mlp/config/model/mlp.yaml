@@ -1,5 +1,4 @@
-_target_: models.CodeCalssificationMLP
-# _partial_: true
+_target_: src.models.CodeCalssificationMLP
 embedding_dim: 32
 num_classes: 54
 hidden_dims:

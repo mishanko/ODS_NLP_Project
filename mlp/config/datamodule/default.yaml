@@ -1,4 +1,4 @@
-_target_: datamodule.CodeClassificationDatamodule
+_target_: src.datamodule.CodeClassificationDatamodule
 # _partial_: true
 datadir: ${datadir}
 tokenizer: ${tokenizer}

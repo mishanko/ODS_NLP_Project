@@ -1,5 +1,4 @@
-# _convert_: all
-_target_: tokenizer.RegexTokenizer
+_target_: src.tokenizer.RegexTokenizer
 vocab: ${vocab}
 pattern: '\b[a-zA-Z]+\b|[(){}<>,;.:=\[\]]'
 max_tokens: ${max_tokens}

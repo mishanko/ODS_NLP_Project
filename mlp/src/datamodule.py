@@ -1,10 +1,10 @@
 from pathlib import Path
 import lightning as L
-from dataset import CodeClassificationDataset
+from .dataset import CodeClassificationDataset
 from torch.utils.data import DataLoader
 from functools import partial
 from sklearn.preprocessing import LabelEncoder
-from tokenizer import RegexTokenizer
+from .tokenizer import RegexTokenizer
 import pickle
 
 

@@ -1,4 +1,4 @@
-_target_: models.CodeCalssificationCNN
+_target_: src.models.CodeCalssificationCNN
 embedding_dim: 32
 num_classes: 54
 hidden_dims:

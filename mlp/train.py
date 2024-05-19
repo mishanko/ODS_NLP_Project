@@ -3,8 +3,8 @@ import hydra
 from hydra.utils import instantiate
 from omegaconf import DictConfig
 import lightning as L
-from pl_model import CodeClassificationModel
-from common import create_metrics_df
+from src.pl_model import CodeClassificationModel
+from src.common import create_metrics_df
 import torch
 
 

@@ -4,15 +4,21 @@ from torch import nn
 class LinearNormAct(nn.Sequential):
     def __init__(self, in_features: int, out_features: int):
         super().__init__()
-        self.add_module("linear", nn.Linear(in_features, out_features))
+        self.add_module("linear", nn.Linear(in_features, out_features, bias=False))
         self.add_module("norm", nn.LayerNorm(out_features))
         self.add_module("act", nn.ReLU())
 
 
 class ConvNormAct(nn.Sequential):
-    def __init__(self, in_features: int, out_features: int, kernel_size: int, groups: int = 1):
+    def __init__(
+        self, 
+        in_features: int, 
+        out_features: int, 
+        kernel_size: int, 
+        groups: int = 1,
+    ):
         super().__init__()
-        self.add_module("conv", nn.Conv1d(in_features, out_features, kernel_size, groups, padding=kernel_size // 2))
+        self.add_module("conv", nn.Conv1d(in_features, out_features, kernel_size, groups, padding=kernel_size // 2, bias=False))
         self.add_module("norm", nn.BatchNorm1d(out_features))
         self.add_module("act", nn.ReLU())
 
