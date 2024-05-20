@@ -1,0 +1,6 @@
+- exp_name=naive_bayes
+- min_df=0.01
+- ngram_range=3
+- model=multinomial_nb
+- vectorizer=count
+- max_features=2048

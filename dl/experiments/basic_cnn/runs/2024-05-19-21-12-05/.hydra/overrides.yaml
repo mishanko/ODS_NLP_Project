@@ -1,0 +1,13 @@
+- exp_name=basic_cnn
+- model=cnn
+- model.embedding_dim=64
+- model.hidden_dims=[256,128]
+- model.kernel_sizes=[5,5]
+- lr=0.003
+- num_workers=16
+- vocab=data/vocab_1_3_001.json
+- max_tokens=256
+- vocab_size=2049
+- padding_idx=2048
+- optim.weight_decay=0.001
+- max_epochs=150

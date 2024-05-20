@@ -1,0 +1,54 @@
+exp_name: null
+datadirs: 
+  train: /data/guesslang_data/Dataset/Data/train
+  valid: /data/guesslang_data/Dataset/Data/valid
+  test: /data/guesslang_data/Dataset/Data/test
+datadir: /data/guesslang_data/Dataset/Data
+
+outputs_dir: ./experiments
+
+max_epochs: 200
+accelerator: gpu
+devices: [1]
+precision: 32
+accumulate_grad_batches: 1
+enable_checkpointing: true
+strategy: auto
+lr: 0.001
+checkpoint: null
+
+
+max_workers: 16
+num_workers: 4
+batch_size: 2048
+metric_to_monitor: F1Score/val
+metric_mode: max
+
+vocab: data/vocab_1_2.json
+label_encoder: data/label_encoder.pkl
+max_tokens: 128
+random_crop: false
+
+padding_idx: 710
+vocab_size: 711
+
+defaults:
+  - _self_
+  - model: mlp
+  - tokenizer: regex
+  - paths: default
+  - callbacks: default
+  - logger: tensorboard
+  - trainer: default
+  - optim: adam
+  - datamodule: default
+  - criterion: ce
+  - scheduler: plateau
+
+
+hydra:
+  run:
+    dir: ${outputs_dir}/${exp_name}/runs/${now:%Y-%m-%d}-${now:%H-%M-%S}
+  sweep:
+    dir: ${outputs_dir}/${exp_name}/multiruns/
+    subdir: ${hydra.job.num}

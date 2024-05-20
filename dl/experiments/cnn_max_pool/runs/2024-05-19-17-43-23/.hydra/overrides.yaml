@@ -1,0 +1,10 @@
+- exp_name=cnn_max_pool
+- model=cnn_max_pool
+- model.embedding_dim=64
+- model.hidden_dims=[256]
+- lr=0.01
+- num_workers=16
+- vocab=data/vocab_1_3_001.json
+- max_tokens=1024
+- vocab_size=2049
+- padding_idx=2048
