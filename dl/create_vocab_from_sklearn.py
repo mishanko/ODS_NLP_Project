@@ -1,5 +1,6 @@
-import pickle
 import json
+import pickle
+
 from fire import Fire
 
 

@@ -1,9 +1,10 @@
-import re
 import json
-from pathlib import Path
-from tqdm.auto import tqdm
-import pandas as pd
+import re
 from collections import Counter, defaultdict
+from pathlib import Path
+
+import pandas as pd
+from tqdm.auto import tqdm
 
 N = int(2e5)
 RND = 42
@@ -48,7 +49,9 @@ def get_common_words(files: list[str], topk: int = 50) -> dict[str, dict[str, in
 if __name__ == "__main__":
     projdir = Path("/data_research/Projects/nlp-proj/guesslang_data/Dataset")
     annotation = pd.read_csv(projdir / "Annotation.csv")
-    annotation = annotation[annotation["usage"] == "train"].sample(n=N, random_state=RND)
+    annotation = annotation[annotation["usage"] == "train"].sample(
+        n=N, random_state=RND
+    )
     datadir = projdir / "Data/train"
     files = [datadir / row["extract_to"] for i, row in annotation.iterrows()]
     counter = get_common_words(files, topk=TOPK)

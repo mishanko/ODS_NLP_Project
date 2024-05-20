@@ -1,7 +1,8 @@
+import shutil
 from pathlib import Path
+
 import pandas as pd
 from tqdm.auto import tqdm
-import shutil
 
 N = int(1e6)
 RND = 42

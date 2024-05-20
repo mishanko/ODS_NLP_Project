@@ -19,7 +19,15 @@ class ConvNormAct(nn.Sequential):
     ):
         super().__init__()
         self.add_module(
-            "conv", nn.Conv1d(in_features, out_features, kernel_size, groups, padding=kernel_size // 2, bias=False)
+            "conv",
+            nn.Conv1d(
+                in_features,
+                out_features,
+                kernel_size,
+                groups,
+                padding=kernel_size // 2,
+                bias=False,
+            ),
         )
         self.add_module("norm", nn.BatchNorm1d(out_features))
         self.add_module("act", nn.ReLU())
@@ -35,7 +43,15 @@ class ConvNormActPool(nn.Sequential):
     ):
         super().__init__()
         self.add_module(
-            "conv", nn.Conv1d(in_features, out_features, kernel_size, groups, padding=kernel_size // 2, bias=False)
+            "conv",
+            nn.Conv1d(
+                in_features,
+                out_features,
+                kernel_size,
+                groups,
+                padding=kernel_size // 2,
+                bias=False,
+            ),
         )
         self.add_module("norm", nn.BatchNorm1d(out_features))
         self.add_module("act", nn.ReLU())
@@ -87,7 +103,9 @@ class CodeClassificationCNN(nn.Module):
         self.layers = nn.Sequential()
         prev_dim = embedding_dim
         for i, hidden_dim in enumerate(hidden_dims):
-            self.layers.add_module(f"block_{i}", block(prev_dim, hidden_dim, kernel_sizes[i]))
+            self.layers.add_module(
+                f"block_{i}", block(prev_dim, hidden_dim, kernel_sizes[i])
+            )
             prev_dim = hidden_dim
         self.pool = nn.AdaptiveAvgPool1d(1)
         self.flatten = nn.Flatten()

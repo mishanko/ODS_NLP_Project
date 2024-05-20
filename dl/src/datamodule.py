@@ -1,11 +1,13 @@
-from pathlib import Path
-import lightning as L
-from .dataset import CodeClassificationDataset
-from torch.utils.data import DataLoader
-from functools import partial
-from sklearn.preprocessing import LabelEncoder
-from .tokenizer import RegexTokenizer
 import pickle
+from functools import partial
+from pathlib import Path
+
+import lightning as L
+from sklearn.preprocessing import LabelEncoder
+from torch.utils.data import DataLoader
+
+from .dataset import CodeClassificationDataset
+from .tokenizer import RegexTokenizer
 
 
 class CodeClassificationDatamodule(L.LightningDataModule):

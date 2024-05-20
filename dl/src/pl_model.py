@@ -1,7 +1,7 @@
 import lightning as L
 import torch
-from torch import Tensor, nn
 import torchmetrics
+from torch import Tensor, nn
 from torchmetrics.classification import MulticlassF1Score
 
 
@@ -50,8 +50,22 @@ class CodeClassificationModel(L.LightningModule):
         output = self(input)
         loss: Tensor = self.criterion(output, target)
         metric: Tensor = self.metrics[f"{mode}_metric"](output, target)
-        self.log(f"loss/{mode}", loss, prog_bar=True, on_epoch=True, logger=True, on_step=False)
-        self.log(f"F1Score/{mode}", metric, prog_bar=True, on_epoch=True, logger=True, on_step=False)
+        self.log(
+            f"loss/{mode}",
+            loss,
+            prog_bar=True,
+            on_epoch=True,
+            logger=True,
+            on_step=False,
+        )
+        self.log(
+            f"F1Score/{mode}",
+            metric,
+            prog_bar=True,
+            on_epoch=True,
+            logger=True,
+            on_step=False,
+        )
         if mode == "val":
             self.log("lr", self.trainer.optimizers[0].param_groups[0]["lr"])
         return loss

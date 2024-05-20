@@ -1,13 +1,13 @@
+import pickle
 from pathlib import Path
 
 import torch
+from sklearn.preprocessing import LabelEncoder
 from torch import Tensor
 from torch.utils.data import Dataset
-from sklearn.preprocessing import LabelEncoder
+
 from .common import read_file
 from .tokenizer import RegexTokenizer
-import pickle
-
 
 
 class CodeClassificationDataset(Dataset):
@@ -29,7 +29,9 @@ class CodeClassificationDataset(Dataset):
         datadir = Path(datadir)
         self.datadir = datadir / mode
         assert self.datadir.exists()
-        files: list[tuple[Path, int]] = [(x, x.suffix) for x in self.datadir.glob("*.*")]
+        files: list[tuple[Path, int]] = [
+            (x, x.suffix) for x in self.datadir.glob("*.*")
+        ]
         self.labels = label_encoder.transform([x[1] for x in files])
         self.label_encoder = label_encoder
         self.files = [x[0] for x in files]

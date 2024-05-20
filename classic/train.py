@@ -1,14 +1,15 @@
-from pathlib import Path
-from common import read_dataset, create_metrics_df
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import LabelEncoder, FunctionTransformer
-from sklearn.metrics import precision_recall_fscore_support, average_precision_score
-import hydra
 import pickle
-from hydra.utils import instantiate
-from omegaconf import DictConfig, OmegaConf
+from pathlib import Path
+
+import hydra
 import numpy as np
 import pandas as pd
+from common import create_metrics_df, read_dataset
+from hydra.utils import instantiate
+from omegaconf import DictConfig, OmegaConf
+from sklearn.metrics import average_precision_score, precision_recall_fscore_support
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import FunctionTransformer, LabelEncoder
 
 
 def resolve_tuple(*args):
@@ -35,7 +36,9 @@ def train(config: DictConfig) -> None:
     if not config.exp_name:
         raise ValueError("`exp_name` must be set")
     datadirs = {k: Path(v) for k, v in config.datadirs.items()}
-    X_train, y_train = read_dataset(list(datadirs["train"].glob("*.*")), config.max_workers)
+    X_train, y_train = read_dataset(
+        list(datadirs["train"].glob("*.*")), config.max_workers
+    )
     le = LabelEncoder()
     # if config.vectorizer_path:
     #     with open(config.vectorizer_path, "rb") as file:
@@ -61,7 +64,9 @@ def train(config: DictConfig) -> None:
     with open(modeldir / "label_encoder.pkl", "wb") as file:
         pickle.dump(le, file)
 
-    X_test, y_test = read_dataset(list(datadirs["test"].glob("*.*")), config.max_workers)
+    X_test, y_test = read_dataset(
+        list(datadirs["test"].glob("*.*")), config.max_workers
+    )
     y_test = le.transform(y_test)
     preds = pipeline.predict(X_test)
     df = create_metrics_df(y_test, preds, le.classes_)
