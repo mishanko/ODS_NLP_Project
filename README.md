@@ -13,6 +13,10 @@ This repository contains the source code for a Machine Learning and Deep Learnin
 - **classic**: Includes a training pipeline for classic machine learning models implemented using scikit-learn.
 - **dl**: Includes a training pipeline for deep learning models implemented using Hydra, PyTorch Lightning, and PyTorch.
 
+### Data Source
+
+You can download the training data from here: https://disk.yandex.ru/d/CUQ8B_7GHi8Vfg
+
 ## Contributors
 
 - [Mikhail Mikhailov](https://github.com/mishanko)
